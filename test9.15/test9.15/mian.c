@@ -1,47 +1,60 @@
-#define _CRT_SECURE_NO_WARNINGS 
+#define _CRT_SECURE_NO_WARNINGS 1
 
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
 
-//字符串倒置 i like beijing.    beijing. like i
-void reverse(char* left, char* right)
-{
-	while (left < right)
-	{
-		char tmp=*right;
-		*right = *left;
-		*left = tmp;
-		left++;
-		right--;
-	}
-}
+//判断大小端
 int main()
 {
-	//先把整个逆序
-	char str[101] = { 0 };
-	gets(str);
-	int len = strlen(str);
-	reverse(str, str + len - 1);
-	//把每个单词逆序
-	char* start=str;
-	char* end=start;
-	while (*start)
-	{
-		while (*end != ' '&& *end!='\0')
-		{
-			end++;
-		}
-		reverse(start, end - 1);
-		if(*end!='\0')
-			end++;
-		start = end;
-	}
-	
-	printf("%s", str);
-	
+	int a = 1;
+	if (*(char*)&a == 1)
+		printf("小端\n");
+	else
+		printf("大端\n");
 	return 0;
 }
+
+////字符串倒置 i like beijing.    beijing. like i
+//void reverse(char* left, char* right)
+//{
+//	while (left < right)
+//	{
+//		char tmp=*right;
+//		*right = *left;
+//		*left = tmp;
+//		left++;
+//		right--;
+//	}
+//}
+//int main()
+//{
+//	//先把整个逆序
+//	char str[101] = { 0 };
+//	gets(str);
+//	int len = strlen(str);
+//	reverse(str, str + len - 1);
+//	//把每个单词逆序
+//	char* start=str;
+//	char* end=start;
+//	while (*start)
+//	{
+//		while (*end != ' '&& *end!='\0')
+//		{
+//			end++;
+//		}
+//		reverse(start, end - 1);
+//		if(*end!='\0')
+//			end++;
+//		start = end;
+//	}
+//	
+//	printf("%s", str);
+//	
+//	return 0;
+//}
+
+
 //求AB最小公倍数
 //int main()
 //{
