@@ -53,37 +53,117 @@
 //	return 0;
 //}
 
-void print1(int arr[3][4], int r, int c)
+//void print1(int arr[3][4], int r, int c)
+//{
+//	int i = 0;
+//	for (i = 0; i < r; i++)
+//	{
+//		int j = 0;
+//		for (j = 0; j < c; j++)
+//		{
+//			printf("%d ", arr[i][j]);
+//		}
+//		printf("\n");
+//	}
+//}
+//void print2(int(*p)[4], int r, int c)
+//{
+//	int i = 0;
+//	for (i = 0; i < r; i++)
+//	{
+//		int j = 0;
+//		for (j = 0; j < c; j++)
+//		{
+//			//printf("%d ", *(*(p + i) + j));
+//			printf("%d ", p[i][j]);
+//		}
+//		printf("\n");
+//	}
+//}
+//int main()
+//{
+//	int arr[3][4] = { 1,1,1,1,2,2,2,2,3,3,3,3 };
+//	print1(arr,3,4);
+//	print2(arr,3,4);//二维数组数组名表示一行的地址,是一个一维数组的地址
+//	return 0;
+//}
+
+//函数指针用途
+//写一个计算器
+void menu()
 {
-	int i = 0;
-	for (i = 0; i < r; i++)
-	{
-		int j = 0;
-		for (j = 0; j < c; j++)
-		{
-			printf("%d ", arr[i][j]);
-		}
-		printf("\n");
-	}
+	printf("**********************\n");
+	printf("*****1.add 2.sub******\n");
+	printf("*****3.mul 4.div******\n");
+	printf("*****   0.exit  ******\n");
+	printf("**********************\n");
+
 }
-void print2(int(*p)[4], int r, int c)
+int Add(int x, int y)
 {
-	int i = 0;
-	for (i = 0; i < r; i++)
-	{
-		int j = 0;
-		for (j = 0; j < c; j++)
-		{
-			//printf("%d ", *(*(p + i) + j));
-			printf("%d ", p[i][j]);
-		}
-		printf("\n");
-	}
+	return x + y;
+}
+int Sub(int x, int y)
+{
+	return x - y;
+}
+int Mul(int x, int y)
+{
+	return x * y;
+}
+int Div(int x, int y)
+{
+	return x / y;
+}
+//通过函数指针把冗余部分中不同代码抽离出来
+void calc(int(*pf)(int, int))
+{
+	
+	int x = 0;
+	int y = 0;
+	int ret = 0;
+	printf("请输入两个操作数：");
+	scanf("%d %d", &x, &y);
+	ret = pf(x, y);
+	printf("%d\n", ret);
 }
 int main()
 {
-	int arr[3][4] = { 1,1,1,1,2,2,2,2,3,3,3,3 };
-	print1(arr,3,4);
-	print2(arr,3,4);//二维数组数组名表示一行的地址,是一个一维数组的地址
-	return 0;
+	int input = 0;
+
+	do
+	{
+		menu();
+		printf("请选择：>");
+		scanf("%d", &input);
+		
+
+		switch (input)
+		{
+		case 1:
+			calc(Add);
+			break;
+		case 2:
+			calc(Sub);
+
+			break;
+		case 3:
+			calc(Mul);
+
+			break;
+		case 4:
+			calc(Div);
+
+			break;
+		case 0:
+			printf("退出计算器\n");
+			break;
+		default:
+			printf("输入有误，请重新输入\n");
+
+			break;
+		}
+	} while (input);
+
+	return;
 }
