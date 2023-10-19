@@ -49,26 +49,113 @@
 //	return 0;
 //}
 
+//
+////使用q_sort快速排序--可以用来比较不同类型，通过修改函数指针内容
+///* 
+//void qsort(
+//	void* base,//目标数组的开头。
+//	size_t num,//元素的数组大小
+//	size_t width,//以字节为单位的元素大小。
+//	int(* compare)(const void*, const void*)
+//);
+//*/
+//
+//int cmp_int(const void* e1, const void* e2)
+//{
+//	/*if (*(int*)e1 < *(int*)e2)
+//		return 1;
+//	else if (*(int*)e1 > *(int*)e2)
+//		return -1;
+//	else
+//		return 0;*/
+//	return (*(int*)e2 - *(int*)e1);
+//}
+//struct Stu
+//{
+//	char name[20];
+//	int age;
+//};
+//int cmp_stu_by_name(const void* e1, const void* e2)
+//{
+//	/*int strcmp(
+//		const char* string1,
+//		const char* string2
+//	);*/
+//	return strcmp((*(struct Stu*)e1).name, (*(struct Stu*)e2).name);
+//}
+//void test2()
+//{
+//	struct Stu s[] = { {"zhangsan",20},{"lisi",90}};
+//	int sz = sizeof(s) / sizeof(s[0]);
+//	qsort(s, sz, sizeof(s[0]), cmp_stu_by_name);
+//}
+//
+//void test1()
+//{
+//	int arr[] = { 0,1,2,3,4,5,6,7,8,9 };
+//	int sz = sizeof(arr) / sizeof(arr[0]);
+//	qsort(arr, sz, sizeof(arr[0]), cmp_int);
+//	int i = 0;
+//	for (i = 0; i < sz; i++)
+//	{
+//		printf("%d ", arr[i]);
+//	}
+//}
+//int main()
+//{
+//	//test1();//用qsort对整数降序
+//	test2();//用qsort排序结构体
+//	return 0;
+//}
 
-//使用q_sort快速排序--可以用来比较不同类型，通过修改函数指针内容
-/* 
-void qsort(
-	void* base,//目标数组的开头。
-	size_t num,//元素的数组大小
-	size_t width,//以字节为单位的元素大小。
-	int(* compare)(const void*, const void*)
-);
-*/
 
-int cmp_int(const void* e1, const void* e2)
+//对冒牌排序改进--类似qsort
+//void qsort(
+//	void* base,//目标数组的开头。
+//	size_t num,//元素的数组大小
+//	size_t width,//以字节为单位的元素大小。
+//	int(* compare)(const void*, const void*)
+//);
+int cmp_int(const void* e1, const void* e2)//比较两数大小
 {
-	/*if (*(int*)e1 < *(int*)e2)
-		return 1;
-	else if (*(int*)e1 > *(int*)e2)
-		return -1;
-	else
-		return 0;*/
-	return (*(int*)e2 - *(int*)e1);
+	return (*(char*)e2 - *(char*)e1);
+}
+void Swap( char* buf1,  char* buf2, int width)//交换实现
+{
+	int i = 0;
+	for (i = 0; i < width; i++)
+	{
+		char tmp = 0;
+		tmp = *(buf1 + i);
+		*(buf1 + i) = *(buf2 + i);
+		*(buf2 + i) = tmp;
+	}
+}
+void bubble_sort(void* base,int sz,int width, int(*cmp)(const void*, const void*))
+{
+	int flag = 1;//假设数组是有序的，已经排好序
+	//趟数,需走n-1趟
+	int i = 0;
+	for (i = 0; i < sz - 1; i++)
+	{
+		//一趟冒泡排序过程
+		int j = 0;
+		//冒泡排序的对数会随着趟数改变
+		for (j = 0; j < sz - 1-i; j++)
+		{
+			//排序
+			if (cmp((char*)base + j * width, (char*)base + (j + 1) * width) > 0)
+			{
+				flag = 0;
+				Swap((char*)base + j * width, (char*)base + (j + 1) * width, width);
+			}
+		}
+
+		if (flag == 1)
+		{
+			break;
+		}
+	}
 }
 struct Stu
 {
@@ -77,33 +164,29 @@ struct Stu
 };
 int cmp_stu_by_name(const void* e1, const void* e2)
 {
-	/*int strcmp(
-		const char* string1,
-		const char* string2
-	);*/
 	return strcmp((*(struct Stu*)e1).name, (*(struct Stu*)e2).name);
 }
-void test2()
-{
-	struct Stu s[] = { {"zhangsan",20},{"lisi",90}};
-	int sz = sizeof(s) / sizeof(s[0]);
-	qsort(s, sz, sizeof(s[0]), cmp_stu_by_name);
-}
-
 void test1()
 {
 	int arr[] = { 0,1,2,3,4,5,6,7,8,9 };
 	int sz = sizeof(arr) / sizeof(arr[0]);
-	qsort(arr, sz, sizeof(arr[0]), cmp_int);
+	bubble_sort(arr, sz, sizeof(arr[0]), cmp_int);
 	int i = 0;
 	for (i = 0; i < sz; i++)
 	{
 		printf("%d ", arr[i]);
 	}
 }
+void test2()
+{
+	struct Stu s[] = { {"zhangsan",20},{"lisi",90} };
+	int sz = sizeof(s) / sizeof(s[0]);
+	bubble_sort(s, sz, sizeof(s[0]), cmp_stu_by_name);
+}
 int main()
 {
-	//test1();//用qsort对整数降序
-	test2();//用qsort排序结构体
+	//test1();
+	test2();
+
 	return 0;
 }
