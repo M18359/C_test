@@ -158,23 +158,45 @@
 //	return 0;
 //}
 
-struct Stu
-{
-	char name[20];
-	int age;
-	float score;
-};
+//struct Stu
+//{
+//	char name[20];
+//	int age;
+//	float score;
+//};
+//int main()
+//{
+//	struct Stu s = { "zhangsan",24,50.2 };
+//	struct Stu tmp = { 0 };
+//	char buf[100];
+//	//把s中格式化数据转化为字符串放到buf中
+//	sprintf(buf, "%s %d %f", s.name, s.age, s.score);
+//	//"zhangsan 24 50.200001"
+//	printf("字符串:%s\n", buf);
+//	//从buf中获取一个格式化的数据到tmp中
+//	sscanf(buf, "%s %d %f", tmp.name, &(tmp.age), &(tmp.score));
+//	printf("格式化：%s %d %f\n", tmp.name, tmp.age, tmp.score);
+//	return 0;
+//}
+
+//fseek
 int main()
 {
-	struct Stu s = { "zhangsan",24,50.2 };
-	struct Stu tmp = { 0 };
-	char buf[100];
-	//把s中格式化数据转化为字符串放到buf中
-	sprintf(buf, "%s %d %f", s.name, s.age, s.score);
-	//"zhangsan 24 50.200001"
-	printf("字符串:%s\n", buf);
-	//从buf中获取一个格式化的数据到tmp中
-	sscanf(buf, "%s %d %f", tmp.name, &(tmp.age), &(tmp.score));
-	printf("格式化：%s %d %f\n", tmp.name, tmp.age, tmp.score);
+	FILE* pf = fopen("test.txt", "r");
+	if (pf == NULL)
+	{
+		perror("pf");
+		return;
+	}
+	fseek(pf, 3, SEEK_SET);
+	char ch = fgetc(pf);
+	printf("%c\n", ch);
+	printf("%d\n", ftell(pf));
+	rewind(pf);
+	ch = fgetc(pf);
+	printf("%c\n", ch);
+
+	fclose(pf);
+	pf = NULL;
 	return 0;
 }
