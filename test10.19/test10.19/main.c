@@ -172,9 +172,9 @@ int main()
 	//把s中格式化数据转化为字符串放到buf中
 	sprintf(buf, "%s %d %f", s.name, s.age, s.score);
 	//"zhangsan 24 50.200001"
-	printf("字符串:%s", buf);
+	printf("字符串:%s\n", buf);
 	//从buf中获取一个格式化的数据到tmp中
 	sscanf(buf, "%s %d %f", tmp.name, &(tmp.age), &(tmp.score));
-	printf("格式化：%s %d %f", tmp.name, tmp.age, tmp.score);
+	printf("格式化：%s %d %f\n", tmp.name, tmp.age, tmp.score);
 	return 0;
 }
