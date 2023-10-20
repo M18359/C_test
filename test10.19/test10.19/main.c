@@ -136,6 +136,28 @@
 //	return 0;
 //}
 
+//struct Stu
+//{
+//	char name[20];
+//	int age;
+//	float score;
+//};
+//int main()
+//{
+//	struct Stu s = { 0};
+//	FILE* pf = fopen("test.txt", "rb");
+//	if (pf == NULL)
+//		perror("fopen");
+//	////二进制形式写入
+//	//fwrite(&s, sizeof(s), 1, pf);
+//	//二进制形式读出
+//	fread(&s, sizeof(struct Stu), 1, pf);
+//	printf("%s %d %f", s.name, s.age, s.score);
+//	fclose(pf);
+//	pf = NULL;
+//	return 0;
+//}
+
 struct Stu
 {
 	char name[20];
@@ -144,16 +166,15 @@ struct Stu
 };
 int main()
 {
-	struct Stu s = { 0};
-	FILE* pf = fopen("test.txt", "rb");
-	if (pf == NULL)
-		perror("fopen");
-	////二进制形式写入
-	//fwrite(&s, sizeof(s), 1, pf);
-	//二进制形式读出
-	fread(&s, sizeof(struct Stu), 1, pf);
-	printf("%s %d %f", s.name, s.age, s.score);
-	fclose(pf);
-	pf = NULL;
+	struct Stu s = { "zhangsan",24,50.2 };
+	struct Stu tmp = { 0 };
+	char buf[100];
+	//把s中格式化数据转化为字符串放到buf中
+	sprintf(buf, "%s %d %f", s.name, s.age, s.score);
+	//"zhangsan 24 50.200001"
+	printf("字符串:%s", buf);
+	//从buf中获取一个格式化的数据到tmp中
+	sscanf(buf, "%s %d %f", tmp.name, &(tmp.age), &(tmp.score));
+	printf("格式化：%s %d %f", tmp.name, tmp.age, tmp.score);
 	return 0;
 }
